@@ -8,17 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		128082282B7C8890000B1E2C /* MedBookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082272B7C8890000B1E2C /* MedBookApp.swift */; };
-		1280822A2B7C8890000B1E2C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082292B7C8890000B1E2C /* ContentView.swift */; };
+		1280822A2B7C8890000B1E2C /* LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082292B7C8890000B1E2C /* LandingScreen.swift */; };
 		1280822C2B7C8894000B1E2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1280822B2B7C8894000B1E2C /* Assets.xcassets */; };
 		1280822F2B7C8894000B1E2C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1280822E2B7C8894000B1E2C /* Preview Assets.xcassets */; };
+		1280823B2B7C8E22000B1E2C /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280823A2B7C8E22000B1E2C /* SignUpScreen.swift */; };
+		1280823D2B7C8E6A000B1E2C /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280823C2B7C8E6A000B1E2C /* LoginScreen.swift */; };
+		128082402B7CA3BF000B1E2C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280823F2B7CA3BF000B1E2C /* NetworkManager.swift */; };
+		128082422B7CAA3A000B1E2C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082412B7CAA39000B1E2C /* SignUpViewModel.swift */; };
+		128082442B7CAA4E000B1E2C /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082432B7CAA4E000B1E2C /* SignUpModel.swift */; };
+		128082472B7D3217000B1E2C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128082462B7D3217000B1E2C /* HomeScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		128082242B7C8890000B1E2C /* MedBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		128082272B7C8890000B1E2C /* MedBookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedBookApp.swift; sourceTree = "<group>"; };
-		128082292B7C8890000B1E2C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		128082292B7C8890000B1E2C /* LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreen.swift; sourceTree = "<group>"; };
 		1280822B2B7C8894000B1E2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1280822E2B7C8894000B1E2C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1280823A2B7C8E22000B1E2C /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		1280823C2B7C8E6A000B1E2C /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		1280823F2B7CA3BF000B1E2C /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		128082412B7CAA39000B1E2C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		128082432B7CAA4E000B1E2C /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		128082462B7D3217000B1E2C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,9 @@
 		128082262B7C8890000B1E2C /* MedBook */ = {
 			isa = PBXGroup;
 			children = (
+				1280823E2B7CA388000B1E2C /* Manager */,
+				128082352B7C8D9A000B1E2C /* Screens */,
 				128082272B7C8890000B1E2C /* MedBookApp.swift */,
-				128082292B7C8890000B1E2C /* ContentView.swift */,
 				1280822B2B7C8894000B1E2C /* Assets.xcassets */,
 				1280822D2B7C8894000B1E2C /* Preview Content */,
 			);
@@ -65,6 +78,59 @@
 				1280822E2B7C8894000B1E2C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		128082352B7C8D9A000B1E2C /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				128082452B7D31FD000B1E2C /* HomeScreen */,
+				128082392B7C8DFD000B1E2C /* SignUpScreen */,
+				128082372B7C8DBA000B1E2C /* LoginScreen */,
+				128082362B7C8DA8000B1E2C /* LandingScreen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		128082362B7C8DA8000B1E2C /* LandingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				128082292B7C8890000B1E2C /* LandingScreen.swift */,
+			);
+			path = LandingScreen;
+			sourceTree = "<group>";
+		};
+		128082372B7C8DBA000B1E2C /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				1280823C2B7C8E6A000B1E2C /* LoginScreen.swift */,
+			);
+			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		128082392B7C8DFD000B1E2C /* SignUpScreen */ = {
+			isa = PBXGroup;
+			children = (
+				1280823A2B7C8E22000B1E2C /* SignUpScreen.swift */,
+				128082412B7CAA39000B1E2C /* SignUpViewModel.swift */,
+				128082432B7CAA4E000B1E2C /* SignUpModel.swift */,
+			);
+			path = SignUpScreen;
+			sourceTree = "<group>";
+		};
+		1280823E2B7CA388000B1E2C /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				1280823F2B7CA3BF000B1E2C /* NetworkManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		128082452B7D31FD000B1E2C /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				128082462B7D3217000B1E2C /* HomeScreen.swift */,
+			);
+			path = HomeScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +203,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1280822A2B7C8890000B1E2C /* ContentView.swift in Sources */,
+				1280822A2B7C8890000B1E2C /* LandingScreen.swift in Sources */,
+				128082442B7CAA4E000B1E2C /* SignUpModel.swift in Sources */,
+				1280823D2B7C8E6A000B1E2C /* LoginScreen.swift in Sources */,
+				128082402B7CA3BF000B1E2C /* NetworkManager.swift in Sources */,
+				128082472B7D3217000B1E2C /* HomeScreen.swift in Sources */,
 				128082282B7C8890000B1E2C /* MedBookApp.swift in Sources */,
+				128082422B7CAA3A000B1E2C /* SignUpViewModel.swift in Sources */,
+				1280823B2B7C8E22000B1E2C /* SignUpScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
