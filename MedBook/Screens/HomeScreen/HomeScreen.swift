@@ -7,33 +7,91 @@
 
 import SwiftUI
 
+
 struct HomeScreen: View {
-    @State var  searchText:String = ""
+    @ObservedObject var vm = HomeScreenViewModel()
+    
     var body: some View {
-        NavigationView{
-            GeometryReader { screen in
-                VStack (alignment: .leading){
-                    Text("Which topic intrests \nyou today?")
-                        .multilineTextAlignment(.leading)
-                        .font(.system(.title,weight: .semibold))
-                        .padding()
-                    
-                    SearchBar(searchText: $searchText)
-                        .padding()
-                        
-             
-                }
-                .navigationBarItems(trailing: CustomButtonView())
-                .navigationBarItems(leading:  LogoAndTitleView())
+        GeometryReader { screen in
+            VStack (alignment: .leading){
+                Text("Which topic intrests \nyou today?")
+                    .multilineTextAlignment(.leading)
+                    .font(.system(.title,weight: .semibold))
+                    .padding()
                 
-               
+                SearchBar(searchText: $vm.searchText,seacrhAction: {vm.search()})
+                    .padding()
+                Spacer()
+                if !vm.books.isEmpty {
+                    VStack {
+                        HStack{
+                            Text("Sort by")
+                            Picker("", selection: $vm.sortBy){
+                                ForEach(sortOptions.allCases,id: \.self){ option in
+                                    Text(option.rawValue)
+                                }
+                            }.pickerStyle(.segmented)
+                                .onChange(of: vm.sortBy){ newValue in
+                                    vm.addFilter(type: newValue)
+                                }
+                        }.padding(.horizontal)
+                        
+                        List {
+                            ForEach(vm.books, id: \.id) { book in
+                                BookDetailsView(book: book)
+                                    .listRowBackground(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(.white)
+                                            .padding(10)
+                                    )
+                                    .listRowSeparator(.hidden)
+                                    .swipeActions(edge: .trailing){
+                                        ZStack{
+                                            Button {
+                                                vm.addToBookMark(book)
+                                            }label: {
+                                                Image("Bookmark")
+                                            }
+                                        }.tint(.clear)
+                                    }
+                                    .onAppear {
+                                        vm.fetchMoreDataIfNeeded(currentItemIndex: vm.books.firstIndex(where: { $0.id == book.id }) ?? 0)
+                                    }
+                            }
+                        }
+                    }
+                    .alert(isPresented: $vm.presentSheet){
+                        Alert(
+                            title: Text(vm.messageTitle),
+                            message: Text(vm.message),
+                            primaryButton: .default(Text("OK")),
+                            secondaryButton: .cancel(Text("Cancel"))
+                        )
+                    }
+                }
+                else{
+                    if vm.isLoading {
+      
+                        VStack{
+                            ProgressView("Loading...")
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .foregroundColor(.green)
+                        }.frame(minWidth: screen.size.width)
+                        Spacer()
+                    }
+                }
             }
+            .background(Color("HomeScreenBG"))
+            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: CustomButtonView(goToBookMark: $vm.goToBookMark,logOutAction: {vm.logout()}))
+            .navigationBarItems(leading: LogoAndTitleView())
+            .navigationDestination(isPresented: $vm.goToBookMark){BookMarkScreen()}
+            .navigationDestination(isPresented: $vm.goToLanding){LandingScreen()}
+            
         }
     }
 }
-
-
-
 
 struct LogoAndTitleView: View {
     var body: some View {
@@ -50,34 +108,36 @@ struct LogoAndTitleView: View {
 }
 
 struct CustomButtonView: View {
+    @Environment(\.presentationMode) var presentation
+    @Binding var goToBookMark:Bool
+    var logOutAction:(()->Void)
     var body: some View {
         HStack{
             Button(action: {
-                // Perform custom action
+                goToBookMark.toggle()
             }) {
                 Image(systemName: "bookmark.fill")
                     .imageScale(.large)
                     .tint(.black)
             }
             Button(action: {
-                // Perform custom action
+                logOutAction()
             }) {
                 Image(systemName: "rectangle.portrait.and.arrow.right")
                     .imageScale(.large)
                     .tint(.pink)
             }
         }
-        
     }
 }
 
-
 struct SearchBar: View {
     @Binding var searchText:String
+    var seacrhAction:(()->Void)
     var body: some View {
         HStack {
             Button{
-                print("---")
+                seacrhAction()
             }label: {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.black)
@@ -85,25 +145,31 @@ struct SearchBar: View {
                 .padding(.vertical)
             TextField("Search", text: $searchText)
                 .foregroundColor(.black)
+                .autocorrectionDisabled()
+                .onSubmit {
+                    seacrhAction()
+                }
             Button{
-                print("---")
+                searchText = ""
             }label: {
                 Image(systemName: "clear")
                     .foregroundColor(.gray)
             }.padding(.leading)
                 .padding(.vertical)
                 .padding(.trailing)
-                
-        }.background(.gray.opacity(0.2))
-            .buttonBorderShape(.capsule)
-            .cornerRadius(10)
-        
-        
+            
+        }
+        .background(.gray.opacity(0.2))
+        .buttonBorderShape(.capsule)
+        .cornerRadius(10)
     }
 }
 
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScreen()
+        NavigationStack{
+            HomeScreen()
+        }
+        
     }
 }

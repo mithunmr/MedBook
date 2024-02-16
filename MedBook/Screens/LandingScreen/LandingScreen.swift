@@ -8,19 +8,24 @@
 import SwiftUI
 
 struct LandingScreen: View {
+    @State private var goToLoginScreen:Bool = false
+    @State private var goToSignupScreen:Bool = false
+
     var body: some View {
-        NavigationView {
             GeometryReader { screen in
                 VStack {
-                    
                     Image("landingImage")
                         .resizable()
                         .frame(height: screen.size.width)
                     
                     Spacer()
+                    
                     HStack {
                         // Signup Button
-                        NavigationLink(destination: SignUpScreen()) {
+                        Button {
+                            goToSignupScreen.toggle()
+                           
+                        }label: {
                             Text("Signup")
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .padding()
@@ -32,7 +37,9 @@ struct LandingScreen: View {
                         }
                         
                         // Login Button
-                        NavigationLink(destination: LoginScreen()) {
+                        Button {
+                            goToLoginScreen.toggle()
+                        } label: {
                             Text("Login")
                                 .frame(minWidth: 0, maxWidth: .infinity)
                                 .padding()
@@ -45,18 +52,19 @@ struct LandingScreen: View {
                     }
                     .padding()
                 }
-            
                 .frame(maxHeight: .infinity)
-                .background(LinearGradient(colors: [Color("SplashScreenBgColor1"),Color("SplashScreenBgColor")], startPoint: .top, endPoint: .bottom))
-                
                 .navigationTitle("Med Book")
+                .navigationBarBackButtonHidden()
+                .navigationDestination(isPresented: $goToLoginScreen){ LoginScreen()}
+                .navigationDestination(isPresented: $goToSignupScreen){ SignUpScreen()}
             }
-        }
+         
+       
     }
 }
 
 struct LandingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LandingScreen()
+        NavigationStack{ LandingScreen()}
     }
 }

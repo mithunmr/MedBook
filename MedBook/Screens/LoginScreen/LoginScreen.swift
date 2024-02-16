@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LoginScreen: View {
-    @State var email:String = ""
-    @State var password:String = ""
+    @ObservedObject var vm = LoginScreenViewModel()
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        NavigationView{
+ 
             GeometryReader { screen in
                 VStack(alignment:.leading) {
                     VStack(alignment: .leading){
@@ -25,7 +25,7 @@ struct LoginScreen: View {
                     }.padding()
                   
                     VStack (spacing: 25){
-                        TextField("Email", text: $email)
+                        TextField("Email", text: $vm.email)
                             .frame(height: 45)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 5)
@@ -35,7 +35,7 @@ struct LoginScreen: View {
                             )
                             .padding(.horizontal, 16)
                         
-                        SecureField("Password", text: $password)
+                        SecureField("Password", text: $vm.password)
                             .frame(height: 45)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 5)
@@ -50,9 +50,10 @@ struct LoginScreen: View {
                     
                     Spacer()
                     VStack(alignment: .center){
-                        NavigationLink(destination: HomeScreen()) {
-                         
-                            
+                        
+                        Button {
+                            vm.authenticateUser()
+                        }label: {
                             Text("Login")
                                 .frame(minWidth: 0, maxWidth: screen.size.width/2)
                                 .padding()
@@ -67,16 +68,38 @@ struct LoginScreen: View {
                     
                 }
                 .background(LinearGradient(colors: [Color("SplashScreenBgColor1"),Color("SplashScreenBgColor")], startPoint: .top, endPoint: .bottom))
+               
             }
-        }
+            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem(placement:.navigationBarLeading){
+                    Button{
+                        presentationMode.wrappedValue.dismiss()
+                    }label: {
+                        Image(systemName: "chevron.left")
+                            .tint(.black)
+                    }
+                }
+            }
+            .alert(isPresented: $vm.presentSheet){
+                Alert(
+                    title: Text("Opps!!!"),
+                    message: Text(vm.message),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel(Text("Cancel"))
+                )
+            }
+            .navigationDestination(isPresented: $vm.goToHomeScreen){
+                HomeScreen()
+            }
+        
     }
 }
 
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
-        
+    
         LoginScreen()
-        
-        
     }
 }

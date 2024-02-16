@@ -9,9 +9,25 @@ import SwiftUI
 
 @main
 struct MedBookApp: App {
+   
+    private func isUserLoggedIn() -> Bool{
+          if let _ = SessionManager.shared.getUserSession() {
+             return true
+          }else{
+              return false
+          }
+    }
     var body: some Scene {
         WindowGroup {
-            LandingScreen()
+            NavigationStack{
+               
+                if isUserLoggedIn() {
+                    HomeScreen()
+                }else{
+                    LandingScreen()
+                }
+            }
+          
         }
     }
 }
