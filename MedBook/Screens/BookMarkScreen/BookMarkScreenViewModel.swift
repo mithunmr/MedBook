@@ -3,8 +3,7 @@ class BookMarkScreenViewModel: ObservableObject {
     
     @Published var books: [BookDetails] = []
     
-    @Published var presentSheet:Bool = false
-    @Published var messageTitle:String = ""
+    @Published var showToast:Bool = false
     @Published var message:String = ""
     
     init() {
@@ -21,7 +20,6 @@ class BookMarkScreenViewModel: ObservableObject {
                 guard let weakSelf = self else { return }
               
                 weakSelf.books = theBooks.map({
-                 
                     return BookDetails(id:$0.id ?? UUID(), title: $0.title ?? "", ratingsAverage: $0.ratingsAverage, ratingsCount: Int($0.ratingsCount), authorName: $0.authorName?.components(separatedBy: ",") ?? [], coverImage: Int($0.coverImage))
                 })
             }
@@ -44,14 +42,12 @@ class BookMarkScreenViewModel: ObservableObject {
             }
             context.delete(bookEntity)
             try context.save()
-            messageTitle = "Great!!!"
-            message = "selected book successfully removed bookmarked"
-            presentSheet.toggle()
+            message = "Removed successfully"
+            showToast.toggle()
             getBookMarkedBooks()
         } catch {
-            messageTitle = "opps!!!"
-            message = "Something went wrong try signing again."
-            presentSheet.toggle()
+            message = "Failed to remove"
+            showToast.toggle()
         }
     }
 }

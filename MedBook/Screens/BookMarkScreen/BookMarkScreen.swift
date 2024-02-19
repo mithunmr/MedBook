@@ -31,19 +31,18 @@ struct BookMarkScreen: View {
                             }.tint(.clear)
                         }
                 }
-                
-                
             }
-            .alert(isPresented: $vm.presentSheet){
-                Alert(
-                    title: Text(vm.messageTitle),
-                    message: Text(vm.message),
-                    primaryButton: .default(Text("OK")),
-                    secondaryButton: .cancel(Text("Cancel"))
-                )
+            .overlay{
+                    ToastView(isPresented: $vm.showToast, content: {
+                        Text(vm.message)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.8))
+                            .cornerRadius(10)
+                    })
             }
         }
-        .navigationTitle("Book Marks")
+        .navigationTitle("Bookmarks")
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.large)
         .toolbar{
@@ -54,7 +53,6 @@ struct BookMarkScreen: View {
                     Image(systemName: "chevron.left")
                         .tint(.black)
                 }
-                
             }
         }
     }

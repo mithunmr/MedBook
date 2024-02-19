@@ -20,7 +20,7 @@ class SignUpViewModel:ObservableObject {
     @Published var isPasswordHasUppercase:Bool = false
     @Published var isPasswordHasSpecialChar:Bool = false
 
-    @Published var goToLoginScreen:Bool = false
+    @Published var goToHomeScreen:Bool = false
     
     @Published var presentSheet:Bool = false
     @Published var message:String = ""
@@ -51,7 +51,6 @@ class SignUpViewModel:ObservableObject {
                 DispatchQueue.main.async {
                     weakSelf.countries = data
                     weakSelf.saveCountryData()
-                    
                 }
             case .failure(let error):
                 print(error)
@@ -68,7 +67,8 @@ class SignUpViewModel:ObservableObject {
             user.country = selectedCountry
             
             if CoreDataManager.shared.saveContext(){
-                goToLoginScreen.toggle()
+                SessionManager.shared.saveUserSession(email: email)
+                goToHomeScreen.toggle()
             }else{
                 message = "Something went wrong try signing again."
                 presentSheet.toggle()

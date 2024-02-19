@@ -7,9 +7,9 @@
 
 import Foundation
 enum sortOptions:String,CaseIterable{
-    case title = "title"
-    case average = "average"
-    case hits = "hits"
+    case title = "Title"
+    case average = "Average"
+    case hits = "Hits"
 }
 class HomeScreenViewModel:ObservableObject{
     let networkManager = NetworkManager()
@@ -18,8 +18,7 @@ class HomeScreenViewModel:ObservableObject{
     @Published var goToBookMark:Bool =  false
     @Published var goToLanding:Bool = false
     
-    @Published var presentSheet:Bool = false
-    @Published var messageTitle:String = ""
+    @Published var showToast:Bool = false
     @Published var message:String = ""
     @Published var isLoading = false
     @Published var sortBy:sortOptions = .title
@@ -28,7 +27,6 @@ class HomeScreenViewModel:ObservableObject{
     private let limit = 10
     
     func search(){
-    
         if searchText.count >= 3{
             currentPage = 1
             books.removeAll()
@@ -47,13 +45,16 @@ class HomeScreenViewModel:ObservableObject{
                 print("BAD Url")
                 return
             }
-            print("---",url)
             weakSelf.networkManager.fetchRequest(type:BookApiResponse.self,url: url){  result in
                 switch result {
                 case .success(let data):
                     DispatchQueue.main.async {
                         weakSelf.books.append(contentsOf:data.docs)
                         weakSelf.isLoading = false
+                        
+                        weakSelf.books.forEach({
+                            print("---",$0.coverImage)
+                        })
                     }
                 case .failure(let error):
                     print(error)
@@ -79,28 +80,29 @@ class HomeScreenViewModel:ObservableObject{
         book.ratingsAverage = thebook.ratingsAverage
         book.email = SessionManager.shared.getUserSession()
         if CoreDataManager.shared.saveContext(){
-            messageTitle = "Great!!!"
-            message = "selected book successfully bookmarked"
-            presentSheet.toggle()
+            message = "Bookmark successfull"
+            showToast.toggle()
         }else{
-            messageTitle = "opps!!!"
-            message = "Something went wrong try signing again."
-            presentSheet.toggle()
+            message = "Bookmark Failed"
+            showToast.toggle()
         }
     }
     
     
     func addFilter(type:sortOptions){
-        books = books.sorted(by: {
-            switch type {
-            case .title:
-               return $0.title < $1.title
-            case .average:
-               return $0.ratingsAverage > $1.ratingsAverage
-            case .hits:
-               return $0.ratingsCount > $1.ratingsCount
-            }
-        })
+        DispatchQueue.main.async{ [weak self] in
+            guard  let weakSelf = self else{ return }
+            weakSelf.books.sort(by: {
+                switch type {
+                case .title:
+                   return $0.title < $1.title
+                case .average:
+                   return $0.ratingsAverage > $1.ratingsAverage
+                case .hits:
+                   return $0.ratingsCount > $1.ratingsCount
+                }
+            })
+        }
     }
     
     

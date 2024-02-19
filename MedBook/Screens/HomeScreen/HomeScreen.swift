@@ -14,18 +14,18 @@ struct HomeScreen: View {
     var body: some View {
         GeometryReader { screen in
             VStack (alignment: .leading){
-                Text("Which topic intrests \nyou today?")
+                Text("Which topic interests \nyou today?")
                     .multilineTextAlignment(.leading)
                     .font(.system(.title,weight: .semibold))
                     .padding()
                 
-                SearchBar(searchText: $vm.searchText,seacrhAction: {vm.search()})
+                SearchBar(searchText: $vm.searchText,searchAction: {vm.search()})
                     .padding()
                 Spacer()
                 if !vm.books.isEmpty {
                     VStack {
                         HStack{
-                            Text("Sort by")
+                            Text("Sort By:")
                             Picker("", selection: $vm.sortBy){
                                 ForEach(sortOptions.allCases,id: \.self){ option in
                                     Text(option.rawValue)
@@ -60,18 +60,11 @@ struct HomeScreen: View {
                             }
                         }
                     }
-                    .alert(isPresented: $vm.presentSheet){
-                        Alert(
-                            title: Text(vm.messageTitle),
-                            message: Text(vm.message),
-                            primaryButton: .default(Text("OK")),
-                            secondaryButton: .cancel(Text("Cancel"))
-                        )
-                    }
+                    
                 }
                 else{
                     if vm.isLoading {
-      
+                        
                         VStack{
                             ProgressView("Loading...")
                                 .progressViewStyle(CircularProgressViewStyle())
@@ -80,7 +73,9 @@ struct HomeScreen: View {
                         Spacer()
                     }
                 }
+                
             }
+            
             .background(Color("HomeScreenBG"))
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
@@ -88,7 +83,15 @@ struct HomeScreen: View {
             .navigationBarItems(leading: LogoAndTitleView())
             .navigationDestination(isPresented: $vm.goToBookMark){BookMarkScreen()}
             .navigationDestination(isPresented: $vm.goToLanding){LandingScreen()}
-            
+            .overlay{
+                    ToastView(isPresented: $vm.showToast, content: {
+                        Text(vm.message)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.8))
+                            .cornerRadius(10)
+                    })
+            }
         }
     }
 }
@@ -133,11 +136,11 @@ struct CustomButtonView: View {
 
 struct SearchBar: View {
     @Binding var searchText:String
-    var seacrhAction:(()->Void)
+    var searchAction:(()->Void)
     var body: some View {
         HStack {
             Button{
-                seacrhAction()
+                searchAction()
             }label: {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.black)
@@ -146,9 +149,13 @@ struct SearchBar: View {
             TextField("Search", text: $searchText)
                 .foregroundColor(.black)
                 .autocorrectionDisabled()
-                .onSubmit {
-                    seacrhAction()
+                .onChange(of: searchText){ _ in
+                    searchAction()
                 }
+                .onSubmit {
+                    searchAction()
+                }
+            
             Button{
                 searchText = ""
             }label: {

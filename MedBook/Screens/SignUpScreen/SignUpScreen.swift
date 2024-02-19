@@ -15,10 +15,10 @@ struct SignUpScreen: View {
         GeometryReader { screen in
             VStack(alignment:.leading) {
                 VStack(alignment: .leading){
-                    Text("Wellcome,")
+                    Text("Wellcome")
                         .font(.largeTitle)
                         .bold()
-                    Text("Sign-up to continue")
+                    Text("sign up to continue")
                         .font(.title)
                 }.padding()
                 
@@ -38,7 +38,7 @@ struct SignUpScreen: View {
                             
                         })
                     
-                    TextField("Password", text: $vm.password)
+                    SecureField("Password", text: $vm.password)
                         .frame(height: 45)
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
@@ -68,7 +68,7 @@ struct SignUpScreen: View {
                     }
                     HStack {
                         Image(systemName: vm.isPasswordHasSpecialChar ? "checkmark.square" : "square")
-                        Text("Contains a spacial character")
+                        Text("Contains a special character")
                             .bold()
                     }
                 }
@@ -93,7 +93,7 @@ struct SignUpScreen: View {
                         vm.SignUp()
                         //
                     }label: {
-                        Text("Lets Go")
+                        Text("Let's go")
                             .frame(minWidth: 0, maxWidth: screen.size.width/2)
                             .padding()
                             .foregroundColor(.black)
@@ -121,12 +121,10 @@ struct SignUpScreen: View {
             }.alert(isPresented: $vm.presentSheet){
                 Alert(
                     title: Text("Opps!!!"),
-                    message: Text(vm.message),
-                    primaryButton: .default(Text("OK")),
-                    secondaryButton: .cancel(Text("Cancel"))
+                    message: Text(vm.message)
                 )
             }
-            .navigationDestination(isPresented: $vm.goToLoginScreen){LoginScreen()}
+            .navigationDestination(isPresented: $vm.goToHomeScreen){HomeScreen()}
         }
     }
 }

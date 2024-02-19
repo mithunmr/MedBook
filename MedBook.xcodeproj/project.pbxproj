@@ -26,6 +26,8 @@
 		12D84E792B7E71730022B902 /* BookMarkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84E782B7E71730022B902 /* BookMarkScreen.swift */; };
 		12D84E7B2B7E78950022B902 /* BookMarkScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84E7A2B7E78950022B902 /* BookMarkScreenViewModel.swift */; };
 		12D84E872B7F0CDB0022B902 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D84E862B7F0CDB0022B902 /* SessionManager.swift */; };
+		12F0D33D2B837C390012D4A4 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0D33C2B837C390012D4A4 /* ToastView.swift */; };
+		12F0D33F2B83AFE20012D4A4 /* AsyncCachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F0D33E2B83AFE20012D4A4 /* AsyncCachedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		12D84E7A2B7E78950022B902 /* BookMarkScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkScreenViewModel.swift; sourceTree = "<group>"; };
 		12D84E862B7F0CDB0022B902 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		12D84E882B7F26540022B902 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		12F0D33C2B837C390012D4A4 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		12F0D33E2B83AFE20012D4A4 /* AsyncCachedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCachedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				1280825B2B7E41A3000B1E2C /* BookDetailsView.swift */,
+				12F0D33C2B837C390012D4A4 /* ToastView.swift */,
+				12F0D33E2B83AFE20012D4A4 /* AsyncCachedImage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 				128082552B7E1A4B000B1E2C /* HomeScreenModel.swift in Sources */,
 				1280823D2B7C8E6A000B1E2C /* LoginScreen.swift in Sources */,
 				128082402B7CA3BF000B1E2C /* NetworkManager.swift in Sources */,
+				12F0D33F2B83AFE20012D4A4 /* AsyncCachedImage.swift in Sources */,
 				1280825C2B7E41A3000B1E2C /* BookDetailsView.swift in Sources */,
 				12D84E7B2B7E78950022B902 /* BookMarkScreenViewModel.swift in Sources */,
 				128082472B7D3217000B1E2C /* HomeScreen.swift in Sources */,
@@ -264,6 +271,7 @@
 				128082422B7CAA3A000B1E2C /* SignUpViewModel.swift in Sources */,
 				1280823B2B7C8E22000B1E2C /* SignUpScreen.swift in Sources */,
 				1280824F2B7DF6E1000B1E2C /* CoreDataManager.swift in Sources */,
+				12F0D33D2B837C390012D4A4 /* ToastView.swift in Sources */,
 				12D84E872B7F0CDB0022B902 /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

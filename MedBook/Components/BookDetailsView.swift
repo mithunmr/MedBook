@@ -13,10 +13,17 @@ struct BookDetailsView: View {
     var body: some View {
         HStack(alignment: .center){
             
-            if let coverImage = book?.coverImage,let url = URL(string:"https://covers.openlibrary.org/b/id/\(coverImage)-M.jpg"){
-                AsyncImage(url: url)
-                    .frame(width: 70, height:70)
-                    .cornerRadius(10)
+            if let coverImage = book?.coverImage,let url = URL(string:"https://covers.openlibrary.org/b/id/\(coverImage)-S.jpg"){
+                AsyncCachedImage(url: url) { image in
+                          image
+                              .resizable()
+                              .aspectRatio(contentMode: .fill)
+                              .frame(width: 70, height:70)
+                              .cornerRadius(10)
+                      } placeholder: {
+                          ProgressView()
+                              .frame(width: 70, height:70)
+                      }
             }else{
                 Image(systemName: "globe")
             }

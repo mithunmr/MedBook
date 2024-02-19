@@ -18,7 +18,7 @@ struct LoginScreen: View {
                         Text("Wellcome,")
                             .font(.largeTitle)
                             .bold()
-                        Text("Login to continue")
+                        Text("log in to continue")
                             .font(.title)
                         
                         
@@ -84,10 +84,8 @@ struct LoginScreen: View {
             }
             .alert(isPresented: $vm.presentSheet){
                 Alert(
-                    title: Text("Opps!!!"),
-                    message: Text(vm.message),
-                    primaryButton: .default(Text("OK")),
-                    secondaryButton: .cancel(Text("Cancel"))
+                    title: Text("Login failed"),
+                    message: Text(vm.message)
                 )
             }
             .navigationDestination(isPresented: $vm.goToHomeScreen){
